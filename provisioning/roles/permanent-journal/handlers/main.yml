@@ -1,0 +1,8 @@
+---
+- name: Journal set temp
+  command: systemd-tmpfiles --create --prefix /var/log/journal
+
+- name: Restart journalctl
+  service:
+    name: systemd-journald
+    state: restarted

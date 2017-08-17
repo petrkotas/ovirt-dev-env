@@ -1,0 +1,28 @@
+---
+- hosts: all
+  become: true
+  roles:
+    - ntp-datetime
+    - ovirt-release-master
+    - devel
+    - permanent-journal
+  tasks:    
+    - name: List requirements from package
+      shell: cat /vagrant/vdsm/automation/check-patch.packages.el7
+      register: result
+
+    - name: Install requirements
+      yum: name={{ item }} state=installed
+      with_items: "{{ result.stdout_lines }}"
+
+    - name: Add export for vdsm source dir
+      lineinfile:
+        path: /home/vagrant/.bashrc
+        regexp: '^export VDSM_SOURCE_DIR='
+        line: 'export VDSM_SOURCE_DIR=/vagrant/vdsm'
+
+    - name: Add source vdsm helpers
+      lineinfile:
+        path: /home/vagrant/.bashrc
+        regexp: '^source /home/vagrant/cont'
+        line: 'source /home/vagrant/contrib/shell_helper'

@@ -1,0 +1,11 @@
+---
+ - name: Install the ntpd
+   yum: name={{ item }} state=installed
+   with_items:
+     - ntp
+     - ntpdate
+     - ntp-doc
+   notify: 
+     - Update ntpd pool
+     - Start and enable ntp daemon
+     - Set the correct timezone

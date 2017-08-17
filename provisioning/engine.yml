@@ -1,0 +1,27 @@
+---
+- hosts: all
+  become: true
+  roles:
+    - ntp-datetime
+    - ovirt-release-master
+    - devel
+    - permanent-journal
+  tasks:
+    - name: Install ovirt-engine
+      yum: name=ovirt-engine state=installed
+
+    - name: Copy config files to host
+      copy:
+        src: "{{ item }}"
+        dest: "/home/vagrant/"
+      with_fileglob:
+        - "artifacts/configs/*"
+
+    - name: Configure engine
+      shell: engine-setup --config=/home/vagrant/engine-answers.txt < /home/vagrant/yes.sh
+
+    - name: Disable firewall, this is devel setup.
+      service:
+        name: firewalld
+        state: stopped
+        enabled: no

@@ -1,0 +1,5 @@
+[build]
+build.vagrant.test
+
+[host]
+host.vagrant.test

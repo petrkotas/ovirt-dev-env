@@ -1,0 +1,28 @@
+---
+- hosts: host
+  become: true
+  tasks:
+    # - name: Add ovirt release repository with VDSM
+    #   yum: 
+    #     name: http://resources.ovirt.org/pub/yum-repo/ovirt-release-master.rpm
+    #     state: installed
+
+    - name: Install vdsm
+      yum: name={{ item }} state=installed
+      with_items:
+        - vdsm
+        - vdsm-client
+
+    - name: Run vdsm-tool and configure the machine
+      command: vdsm-tool configure
+
+    - name: Ensure required services are enabled and running
+      service:
+        name: "{{ item }}"
+        state: started
+        enabled: yes
+      with_items:
+        - vdsmd
+        - libvirtd
+        - messagebus
+        - libvirt-guests

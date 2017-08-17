@@ -1,0 +1,9 @@
+---
+- name: Create journalctl permanent folder
+  file: 
+    path: /var/log/journal
+    state: directory
+    mode: 0755
+  notify:
+    - Journal set temp
+    - Restart journalctl

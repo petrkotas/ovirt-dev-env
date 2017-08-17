@@ -1,0 +1,28 @@
+---
+- name: Add devel packages
+  yum:
+    name: "@Development tools"
+    state: present
+
+- name: Install devel packages
+  yum: name={{ item }} state=installed
+  with_items:
+    - vim
+    - python2-pip
+    - createrepo
+    - gettext
+    - gettext-devel
+    - intltool
+    - autoconf 
+    - automake
+    - git
+    - make 
+    - otopi-devtools 
+    - pyflakes
+    - python-pep8
+    - python2-devel
+    - yum-utils
+
+- name: Install tox for testing
+  pip:
+    name: tox

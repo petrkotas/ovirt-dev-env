@@ -1,0 +1,12 @@
+---
+- name: Update ntpd pool
+  command: ntpdate pool.ntp.org
+
+- name: Start and enable ntp daemon
+  service:
+    name: ntpd
+    state: started
+    enabled: yes
+
+- name: Set the correct timezone
+  command: timedatectl set-timezone Europe/Prague

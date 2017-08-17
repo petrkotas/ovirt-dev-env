@@ -1,0 +1,5 @@
+---
+- name: Add VDSM repo
+  yum: 
+    name: http://resources.ovirt.org/pub/yum-repo/ovirt-release-master.rpm
+    state: installed

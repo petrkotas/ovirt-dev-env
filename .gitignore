@@ -1,0 +1,5 @@
+# ignore source directory
+source
+
+# ignore temporary rpm directory
+rpm

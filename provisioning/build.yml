@@ -1,8 +1,0 @@
----
-- hosts: all
-  become: true
-  roles:
-    - ntp-datetime
-    - ovirt-release-master
-    - devel
-    - permanent-journal

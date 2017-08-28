@@ -2,6 +2,7 @@
 - hosts: all
   become: true
   roles:
+    - epel
     - ntp-datetime
     - ovirt-release-master
     - devel

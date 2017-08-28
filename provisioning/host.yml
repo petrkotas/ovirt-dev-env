@@ -2,11 +2,12 @@
 - hosts: all
   become: true
   roles:
+    - epel
     - ntp-datetime
     - ovirt-release-master
     - devel
     - permanent-journal
-  tasks:    
+  tasks:
     - name: List requirements from package
       shell: cat /vagrant/vdsm/automation/check-patch.packages.el7
       register: result

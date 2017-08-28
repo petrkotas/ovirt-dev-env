@@ -1,0 +1,5 @@
+---
+- name: Install epel
+  yum:
+    name: epel-release
+    state: installed

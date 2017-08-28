@@ -15,3 +15,10 @@ setup with oVirt hypervisor and nested virtualization enabled.
 * vagrant
 * vagrant-hostmanager
 * NFS enabled
+
+## How to use
+
+```
+Default username: admin
+Default password: admin
+```

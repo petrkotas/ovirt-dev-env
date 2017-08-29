@@ -14,30 +14,10 @@ Vagrant.configure("2") do |config|
   config.ssh.insert_key = false
   config.ssh.private_key_path = ["provisioning/artifacts/keys/.vagrant_access", "~/.vagrant.d/insecure_private_key"]
   config.vm.provision "file", source: "provisioning/artifacts/keys/.vagrant_access.pub", destination: "~/.ssh/authorized_keys"
+  config.vm.network :private_network, type: "dhcp"
 
   config.vm.synced_folder ".", "/vagrant", disabled: true
 
-  config.vm.network :private_network, type: "dhcp"
-  
-  # config.vm.define :build, autostart: false do |build|
-
-  #   build.vm.network :private_network, type: "dhcp"
-  #   build.vm.hostname = "build.vagrant.test"
-
-  #   build.vm.provider :libvirt do |libvirt|
-  #     libvirt.cpu_mode = "host-model"
-  #     libvirt.memory = 2048
-  #   end
-
-  #   build.vm.synced_folder "source", "/vagrant/", type: "nfs", nfs_version: 4, nfs_udp: false
-
-  #   build.vm.provision "file", source: "provisioning/artifacts/keys/.vagrant_access.pub", destination: "~/.ssh/authorized_keys"
-  #   build.vm.provision :shell, :inline => "sudo yum install -y epel-release && sudo yum install -y ansible"
-  #   build.vm.provision :ansible do |ansible|
-  #     ansible.playbook = "provisioning/build.yml"
-  #   end
-
-  # end
 
   config.vm.define :host do |host|
     
@@ -69,7 +49,7 @@ Vagrant.configure("2") do |config|
     end
 
     engine.vm.synced_folder "rpm", "/home/vagrant/rpms", type: "rsync"
-    engine.vm.synced_folder "source", "/vagrant/source/", type: "nfs", nfs_version: 4, nfs_udp: false    
+    engine.vm.synced_folder "source", "/vagrant/source/", type: "nfs", nfs_version: 4, nfs_udp: false
 
     engine.vm.provision :ansible do |ansible|
       ansible.playbook = "provisioning/engine.yml"

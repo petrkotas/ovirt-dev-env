@@ -1,0 +1,43 @@
+---
+- name: Install devel dependencies
+  yum:
+    name: "{{ item }}"
+    state: "present"
+  with_items:
+    - java-1.8.0-openjdk
+    - java-1.8.0-openjdk-devel
+    - mailcap
+    - unzip
+    - openssl
+    - python-dateutil
+    - m2crypto
+    - python-m2ext
+    - python-psycopg2
+    - python-jinja2
+    - libxml2-python
+    - python-daemon
+    - otopi
+    - ovirt-host-deploy
+    - ovirt-js-dependencies
+    - ovirt-setup-lib
+    - pyflakes
+    - python-pep8
+    - python-docker-py
+
+- name: Install maven
+  block:
+    - get_url:
+        url: http://www-eu.apache.org/dist/maven/maven-3/3.5.0/binaries/apache-maven-3.5.0-bin.tar.gz
+        dest: /opt/apache-maven-3.5.0-bin.tar.gz
+    - unarchive:
+        src: /opt/apache-maven-3.5.0-bin.tar.gz
+        dest: /opt
+        remote_src: "yes"
+    - lineinfile:
+        path: /etc/profile.d/maven.sh
+        state: "present"
+        create: "yes"
+        line: "{{ item }}"
+      with_items:
+        - "export M2_HOME=/opt/apache-maven-3.5.0"
+        - "export PATH=${M2_HOME}/bin:${PATH}"

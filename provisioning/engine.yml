@@ -1,25 +1,27 @@
 ---
 - hosts: all
-  become: true
+  become: yes
   roles:
     - epel
-    - ntp-datetime
     - ovirt-release-master
     - devel
+    - ntp-datetime
     - permanent-journal
+    - engine-dependencies
+    # - geerlingguy.postgresql
   tasks:
     - name: Install ovirt-engine
       yum: name=ovirt-engine state=installed
 
-    - name: Copy config files to host
-      copy:
-        src: "{{ item }}"
-        dest: "/home/vagrant/"
-      with_fileglob:
-        - "artifacts/configs/*"
+    # - name: Copy config files to host
+    #   copy:
+    #     src: "{{ item }}"
+    #     dest: "/home/vagrant/"
+    #   with_fileglob:
+    #     - "artifacts/configs/*"
 
-    - name: Configure engine
-      shell: engine-setup --config=/home/vagrant/engine-answers.txt < /home/vagrant/yes.sh
+    # - name: Configure engine
+    #   shell: engine-setup --config=/home/vagrant/engine-answers.txt < /home/vagrant/yes.sh
 
     - name: Disable firewall, this is devel setup.
       service:

@@ -13,6 +13,7 @@ Vagrant.configure("2") do |config|
 
   config.ssh.insert_key = false
   config.ssh.private_key_path = ["provisioning/artifacts/keys/.vagrant_access", "~/.vagrant.d/insecure_private_key"]
+  config.vm.provision "file", source: "provisioning/artifacts/keys/.vagrant_access", destination: "~/.ssh/id_rsa"
   config.vm.provision "file", source: "provisioning/artifacts/keys/.vagrant_access.pub", destination: "~/.ssh/authorized_keys"
   config.vm.network :private_network, type: "dhcp"
 
@@ -24,8 +25,10 @@ Vagrant.configure("2") do |config|
     host.vm.hostname = "host.vagrant.test"
 
     host.vm.provider :libvirt do |libvirt|
+      libvirt.nested = true
       libvirt.cpu_mode = "host-model"
-      libvirt.memory = 4096 
+      libvirt.cpus = 1
+      libvirt.memory = 8096 
     end
 
     host.vm.synced_folder "source/vdsm/contrib", "/home/vagrant/contrib", type: "rsync"
@@ -43,8 +46,8 @@ Vagrant.configure("2") do |config|
 
     engine.vm.provider :libvirt do |libvirt|
       libvirt.cpu_mode = "host-model"
-      libvirt.memory = 2048
-      libvirt.cpus = 2
+      libvirt.memory = 4096
+      libvirt.cpus = 1
       libvirt.random :model => "random"
     end
 

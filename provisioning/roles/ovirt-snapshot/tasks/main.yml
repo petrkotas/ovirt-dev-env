@@ -1,0 +1,16 @@
+---
+- name: Set ovirt snapshot repositories for the latest and greatest ovirt
+  yum_repository:
+    name: ovirt-master-snapshot
+    description: oVirt master nightly snapshot
+    baseurl: http://resources.ovirt.org/pub/ovirt-master-snapshot/rpm/el$releasever/
+    enabled: yes
+    gpgcheck: no
+
+- name: Set additional ovirt snapshost repositories
+  yum_repository:
+    name: ovirt-master-snapshot-static
+    description: additional oVirt master nightly snapshot
+    baseurl: http://resources.ovirt.org/pub/ovirt-master-snapshot-static/rpm/el$releasever/
+    enabled: yes
+    gpgcheck: no

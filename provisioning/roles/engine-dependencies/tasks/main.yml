@@ -14,6 +14,7 @@
     - python-m2ext
     - python-psycopg2
     - python-jinja2
+    - python2-isort
     - libxml2-python
     - python-daemon
     - otopi
@@ -23,6 +24,8 @@
     - pyflakes
     - python-pep8
     - python-docker-py
+    - ovirt-engine-wildfly
+    - ovirt-engine-wildfly-overlay
 
 - name: Install maven
   block:
@@ -39,5 +42,5 @@
         create: "yes"
         line: "{{ item }}"
       with_items:
-        - "export M2_HOME=/opt/apache-maven-3.5.0"
+        - "export M2_HOME=/opt/apache-maven-3.5.3"
         - "export PATH=${M2_HOME}/bin:${PATH}"

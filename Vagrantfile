@@ -46,13 +46,13 @@ Vagrant.configure("2") do |config|
 
     engine.vm.provider :libvirt do |libvirt|
       libvirt.cpu_mode = "host-model"
-      libvirt.memory = 4096
+      libvirt.memory = 16384
       libvirt.cpus = 1
       libvirt.random :model => "random"
     end
 
     engine.vm.synced_folder "rpm", "/home/vagrant/rpms", type: "rsync"
-    engine.vm.synced_folder "source", "/vagrant/source/", type: "nfs", nfs_version: 4, nfs_udp: false
+    engine.vm.synced_folder "source", "/vagrant/", type: "nfs", nfs_version: 4, nfs_udp: false
 
     engine.vm.provision :ansible do |ansible|
       ansible.playbook = "provisioning/engine.yml"

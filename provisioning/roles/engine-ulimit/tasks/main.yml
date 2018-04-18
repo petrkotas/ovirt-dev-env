@@ -1,0 +1,11 @@
+---
+- name: Copy the limits file required by the engine
+  copy:
+    src: files/10-nofile.conf
+    dest: /etc/security/limits.d/10-nofile.conf
+    
+- name: Ensure pam.d is configured properly
+  lineinfile:
+    dest: /etc/pam.d/login
+    line: 'session    required     pam_limits.so'
+    state: 'present'

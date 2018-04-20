@@ -1,0 +1,8 @@
+---
+- name: Add ovrt ci tools repository (same tools as in the ci, otherwise no pass) 
+  yum_repository:
+    name: ovirt-ci-tools
+    description: oVirt ci tools
+    baseurl: http://resources.ovirt.org/repos/ci-tools/el7/
+    enabled: yes
+    gpgcheck: no

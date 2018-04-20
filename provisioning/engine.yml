@@ -4,6 +4,7 @@
   roles:
     - epel
     - ovirt-snapshot
+    - ovirt-ci-tools
     - postgres95
     - ntp-datetime
     - permanent-journal
